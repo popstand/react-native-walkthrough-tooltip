@@ -128,6 +128,19 @@ class Tooltip extends Component<Props, State> {
         this.setState({ waitingForInteractions: false });
       });
     }
+
+    const { expose } = this.props
+    if (expose) {
+      const { keys, handler } = expose
+      const exposed = {}
+      for (const key of keys) {
+        if (key in this) {
+          exposed[key] = this[key]
+        }
+      }
+
+      handler(exposed)
+    }
   }
 
   componentWillReceiveProps(nextProps: Props) {
